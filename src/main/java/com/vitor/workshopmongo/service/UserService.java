@@ -15,15 +15,13 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository repo;
+	
 	public List<User> findAll() {
 		return repo.findAll();
 	}
 	
-	public Object findById(String id) {
-		Optional<User> user = repo.findById(id);
-		if (user == null) {
-			throw new ObjectNotFoundException("Objeto não encontrado");
-		}
-		return user;
+	public User findById(String id) {
+		Optional<User> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
 	}
 }
